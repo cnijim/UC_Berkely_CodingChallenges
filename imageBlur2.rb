@@ -1,6 +1,6 @@
 class Image
   def initialize(imageData)  
-    @@degugMode = true
+    @@degugMode = false
     @imageData = imageData  
     @@hits = []
     @@blurred_coordinates = []

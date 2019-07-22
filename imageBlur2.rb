@@ -22,6 +22,8 @@ class Image
   end
 
   def find_hit_coordinates
+    #out of the original data, find the coordiantes of all 1's
+    #coordinates start with 0,0 at the top left
     row = 0
     column = 0
     @imageData.each do |line|
@@ -37,6 +39,7 @@ class Image
   end
 
   def blur_hit_coordinates
+    #create a blur around each hit coordinate
     if @@degugMode
       puts "Original Coordiates:"
       print @@hits
@@ -62,7 +65,7 @@ class Image
     end
   end
 
-  def filter_blurred_coordinates
+  def filter_blurred_coordinates 
     #finds out of range coordinates
     @@blurred_coordinates.each do |coordinate|
       if !(coordinate[0] < 0 || coordinate[0] > @@imageWidth || coordinate[1] < 0 || coordinate[1] > @@imageHeight)
@@ -114,5 +117,6 @@ image = Image.new([
 ])
 
 image.blur_image
+
 
 

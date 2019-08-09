@@ -1,3 +1,35 @@
+class Stack
+  attr_reader :data
+
+  def initialize
+      @data = nil
+  end
+
+  def define(linkedList)
+    @data = linkedList
+  end
+
+  # Push a value onto the stack
+  def push(value)
+    if @data
+      @data = LinkedListNode.new(value, @data)
+    else
+      @data = LinkedListNode.new(value)
+    end
+    return @data
+  end
+
+  def pop
+    if @data.nil?
+      popValue="nil"
+    else
+      popValue = @data.value
+      @data = @data.next_node      
+    end
+    return popValue
+  end
+end
+
 class LinkedListNode
   attr_accessor :value, :next_node
 
@@ -6,6 +38,8 @@ class LinkedListNode
     @next_node = next_node
   end
 end
+
+
 
 def print_values(list_node)
   if list_node
@@ -17,46 +51,28 @@ def print_values(list_node)
   end
 end
 
-@listNodeInstructions = []
-def unpack_linked_list(list_node)
-  if list_node
-    @listNodeInstructions << list_node.value
-    unpack_linked_list(list_node.next_node)
-  else
-    return @listNodeInstructions
-  end
-end
+def reverse_list(list)
+  reverseStack = Stack.new
+  stack = Stack.new
+  stack.define(list)
 
-def construct_node(instructions)
-  init = true
-  instructions.each do |instruction|
-    if init == true
-      reversedNode = LinkedListNode.new(instruction)
-      @nodeOfInterest = reversedNode
-      init = false
+  while list
+    poppedValue = stack.pop()
+    # puts poppedValue
+    if poppedValue != "nil"
+      revlist = reverseStack.push(poppedValue)
     else
-      reversedNode = LinkedListNode.new(instruction, @nodeOfInterest)
-      @nodeOfInterest = reversedNode
+      return revlist
     end
   end
-  return @nodeOfInterest
 end
 
-
-def reverse_list(node)
-  nodeInstructions = unpack_linked_list(node)
-  finalNode = construct_node(nodeInstructions)
-  return finalNode
-end
 
 node1 = LinkedListNode.new(37)
 node2 = LinkedListNode.new(99, node1)
 node3 = LinkedListNode.new(12, node2)
 
 print_values(node3)
-
 puts "-------"
-
 revlist = reverse_list(node3)
 print_values(revlist)
-puts ""
